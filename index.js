@@ -37,6 +37,10 @@ function check(data) {
         if (body.data) {
           body.data.goodsSpecificationListWithRmbPrice.forEach(element2 => {
             console.log(element2.name, element2.specValue, element2.priceRmb, element2.inventory)
+            if (element2.inventory > 0 && !element.isAlert) {
+              element.isAlert = true
+              sendMessage('夜市商品数量监控', element2.name, `[${JSON.parse(element2.specValue)[0]}]: 当前价格${element2.priceRmb} 剩余数量${element2.inventory}`)
+            }
             if (element.rmb > element2.priceRmb && element2.inventory > 0) {
               element.rmb = element2.priceRmb
               sendMessage('夜市商品价格监控', element2.name, `[${JSON.parse(element2.specValue)[0]}]: 当前价格${element2.priceRmb} 剩余数量${element2.inventory}`)
